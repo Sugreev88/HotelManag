@@ -112,4 +112,5 @@ module.exports = {
   loginViaToken,
   verifyLogIntoken,
   logout,
+  errorHandler,
 };

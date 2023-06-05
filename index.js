@@ -8,8 +8,9 @@ dbUtils.connectDb();
 app.use(express.json());
 
 const authRoute = require("./routes/userRoutes");
+const hotelRoute = require("./routes/hotelRoutes");
 app.use("/user", authRoute);
-
+app.use("/user", hotelRoute);
 const error = async function (err, req, res, next) {
   if (err.status) {
     res.status(err.status).send({ message: err.message });

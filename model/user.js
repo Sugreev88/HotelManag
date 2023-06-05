@@ -8,13 +8,6 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       required: true,
       maxlength: 50,
-      validate: {
-        validator: function (value) {
-          const regex = /^[A-Za-z\s]+$/;
-          return regex.test(value);
-        },
-        message: "Name must contain only alphabets and numbers 1-9.",
-      },
     },
     email: {
       type: String,
@@ -22,13 +15,6 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       maxlength: 200,
       required: true,
-      validate: {
-        validator: function (value) {
-          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return regex.test(value);
-        },
-        message: "Email address is not valid.",
-      },
     },
     password: {
       type: String,
