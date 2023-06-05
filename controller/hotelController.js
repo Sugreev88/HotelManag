@@ -1,6 +1,7 @@
 const HotelError = require("../error/authError");
 const hotelService = require("../service/hotelService");
 const { errorHandler } = require("../controller/authController");
+const authService = require("../service/authService");
 
 const newHotelListing = async function (req, res, next) {
   try {
@@ -74,7 +75,6 @@ const hotelReview = async function (req, res, next) {
   try {
     const hotelId = req.params.hotelId;
     const userId = req.params.userId;
-    console.log(hotelId, userId);
     const { review, rating } = req.body;
     let result = await hotelService.addReviewtoHotel(
       hotelId,

@@ -14,9 +14,7 @@ const addHoteltoDB = async function ({
   user,
   totalRooms,
 }) {
-  //   console.log(user);
   const user1 = await User.findOne({ _id: user });
-  //   console.log(user1)
   if (!user1) throw new HotelError("user not found", 404);
   if (user1.role == "Customer") throw new HotelError("Access Denied", 401);
   let result = await new Hotel({
@@ -74,7 +72,6 @@ const addBooking = async function ({
 const sendMessageViaMail = async function (user, hotel, totalPrice) {
   try {
     const user1 = await User.findOne({ _id: user });
-    // console.log(user1.email);
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {

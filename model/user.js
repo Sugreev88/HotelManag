@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       required: true,
       maxlength: 50,
+      unique: true,
     },
     email: {
       type: String,
@@ -31,13 +32,6 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique: true,
-      validate: {
-        validator: function (value) {
-          const regex = /^\d{10}$/;
-          return regex.test(value);
-        },
-        message: "Phone number must be a 10-digit number.",
-      },
     },
     token: {
       type: String,
