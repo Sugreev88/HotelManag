@@ -80,7 +80,7 @@ const sendMessageViaMail = async function (user, hotel, totalPrice) {
       },
       debug: true,
     });
-
+    console.log(user1.email);
     let mailOptions = {
       from: process.env.GMAIL,
       to: `${user1.email}`,

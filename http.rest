@@ -1,0 +1,93 @@
+@baseurl=http://localhost:3200
+
+###
+POST {{baseurl}}/user/signup
+Content-Type: application/json
+
+{
+    "name":"hardik",
+    "email":"hardikgarg885@gmail.com",
+    "phone":9215503085,
+    "role":"Admin",
+    "password":"1234"
+}     
+
+
+###
+POST {{baseurl}}/user/verify/mobile
+Content-Type: application/json
+
+{
+    "phone":9215503085
+}
+
+###
+POST {{baseurl}}/user/verify/mobile/otp
+Content-Type: application/json
+
+{
+    "phone":9215503085,
+    "otp":569214
+}
+
+###
+POST {{baseurl}}/user/login
+Content-Type: application/json
+
+{
+    "email":"hardikgarg885@gmail.com",
+    "password":"1234"
+}
+
+###
+POST {{baseurl}}/user/login/token
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2RkNzg4ZjgwNWI2Zjc3M2NlZjg1OSIsImVtYWlsMSI6ImhhcmRpa2dhcmc4ODVAZ21haWwuY29tIiwiaWF0IjoxNjg1OTY4OTE1fQ.Apyl71J7nbxc1CHzqSSzo0zDhKU8jGdgtzDuI2dMkKc
+
+###
+POST {{baseurl}}/user/logout
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2RkNzg4ZjgwNWI2Zjc3M2NlZjg1OSIsImVtYWlsMSI6ImhhcmRpa2dhcmc4ODVAZ21haWwuY29tIiwiaWF0IjoxNjg1OTY4OTE1fQ.Apyl71J7nbxc1CHzqSSzo0zDhKU8jGdgtzDuI2dMkKc
+
+# hotel
+###
+POST {{baseurl}}/user/addhotel
+Content-Type: application/json
+
+{
+    "name":"Hotel New Maurya",
+    "description":" give wings to your dreamy destinations. ",
+    "location":"singapore",
+    "address":"singapore",
+    "user":"647dcdc6fd4eb43e70254826",
+    "totalRooms":10
+}
+
+###
+GET {{baseurl}}/user/getAllHotels
+
+###
+GET {{baseurl}}/user/getHotelsByLocation/Faridabad
+
+###
+POST {{baseurl}}/user/booking
+Content-Type: application/json
+
+{
+  "hotel":"647dce86fd4eb43e7025483a",
+  "user":"647dd788f805b6f773cef859",
+  "checkInDate":"2023-6-5",
+ "checkOutDate":"2023-6-8",
+  "numGuests":2,
+  "rooms":2,
+  "totalPrice":2000,
+  "paymentStatus":"Paid"
+}
+
+
+###
+POST {{baseurl}}/user/hotelReview/647dce86fd4eb43e7025483a/647dcdc6fd4eb43e70254826
+Content-Type: application/json
+
+{
+    "review":"nice",
+    "rating":5
+}
