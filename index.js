@@ -11,6 +11,10 @@ const authRoute = require("./routes/userRoutes");
 const hotelRoute = require("./routes/hotelRoutes");
 app.use("/user", authRoute);
 app.use("/user", hotelRoute);
+
+app.get((req, res) => {
+  res.send("hello world");
+});
 const error = async function (err, req, res, next) {
   if (err.status) {
     res.status(err.status).send({ message: err.message });
