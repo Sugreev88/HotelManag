@@ -28,7 +28,7 @@ const error = async function (err, req, res, next) {
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(error);
-app.use(cors);
+app.use(cors());
 
 app.listen(PORT, () => {
   console.log(`listening on port:${PORT}`);

@@ -1,5 +1,5 @@
-# @baseurl=https://hotel-management-o6hj.onrender.com
-@baseurl=http://localhost:3200
+@baseurl=https://hotel-management-gf0g.onrender.com/
+# @baseurl=http://localhost:3200
 
 ### create hotel ###
 ###
