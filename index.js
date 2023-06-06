@@ -7,7 +7,8 @@ const swaggerDocument = require("./utils/swagger.json");
 const dbUtils = require("./utils/dbUtils");
 dbUtils.connectDb();
 app.use(express.json());
-
+const cors = require("cors");
+app.use(cors);
 const authRoute = require("./routes/userRoutes");
 const hotelRoute = require("./routes/hotelRoutes");
 app.use("/user", authRoute);
