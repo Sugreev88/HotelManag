@@ -55,6 +55,14 @@ const addBooking = async function ({
   if (!validHotel) throw new HotelError("hotel not found", 404);
   const validUser = await User.findOne({ _id: user });
   if (!validUser) throw new HotelError("user not found", 404);
+  // console.log(validHotel.totalRooms);
+  if (!(validHotel.totalRooms >= rooms))
+    throw new HotelError("Rooms are already fulled", 400);
+  const totalRoomsAvailable = validHotel.totalRooms - rooms;
+  let updatedHotelRooms = await Hotel.updateOne(
+    { _id: hotel },
+    { $set: { availableRooms: totalRoomsAvailable } }
+  );
   let result = await new Booking({
     hotel,
     user,
@@ -96,14 +104,14 @@ const sendMessageViaMail = async function (user, hotel, totalPrice) {
 
 const addReviewtoHotel = async function (hotelId, userId, review1, rating1) {
   if (rating1 > 5) throw new HotelError("please select betwwen 1 to 5", 400);
-  const hotel = await Booking.findOne({ hotel: hotelId });
+  const hotel = await Booking.find({ hotel: hotelId });
   if (!hotel) throw new HotelError("Hotel not found", 404);
-  if (!(hotel.user == userId)) throw new HotelError("Access Denied", 401);
+  const [n] = hotel;
+  if (!(n.user == userId)) throw new HotelError("Access Denied", 401);
   const updatedReview = await Hotel.updateOne(
     { _id: hotelId },
-    { review: review1, rating: rating1 }
+    { $push: { reviews: { user: userId, review: review1, rating: rating1 } } }
   );
-  console.log(updatedReview);
   return;
 };
 

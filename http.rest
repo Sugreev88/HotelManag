@@ -1,3 +1,4 @@
+# @baseurl=https://hotelmanagement-gly8.onrender.com
 @baseurl=http://localhost:3200
 
 ###
@@ -5,20 +6,19 @@ POST {{baseurl}}/user/signup
 Content-Type: application/json
 
 {
-    "name":"hardik",
-    "email":"hardikgarg885@gmail.com",
-    "phone":9215503085,
+    "name":"sugreev",
+    "email":"ksugreev88@gmail.com",
+    "phone":8826891859,
     "role":"Admin",
     "password":"1234"
 }     
-
 
 ###
 POST {{baseurl}}/user/verify/mobile
 Content-Type: application/json
 
 {
-    "phone":9215503085
+    "phone":8826891859
 }
 
 ###
@@ -26,8 +26,8 @@ POST {{baseurl}}/user/verify/mobile/otp
 Content-Type: application/json
 
 {
-    "phone":9215503085,
-    "otp":569214
+    "phone":8826891859,
+    "otp":974348
 }
 
 ###
@@ -35,13 +35,13 @@ POST {{baseurl}}/user/login
 Content-Type: application/json
 
 {
-    "email":"hardikgarg885@gmail.com",
+    "email":"ksugreev88@gmail.com",
     "password":"1234"
 }
 
 ###
 POST {{baseurl}}/user/login/token
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2RkNzg4ZjgwNWI2Zjc3M2NlZjg1OSIsImVtYWlsMSI6ImhhcmRpa2dhcmc4ODVAZ21haWwuY29tIiwiaWF0IjoxNjg1OTY4OTE1fQ.Apyl71J7nbxc1CHzqSSzo0zDhKU8jGdgtzDuI2dMkKc
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2ViM2YxNmRiZDg2NTFkZGZlMTMwMiIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MDI1Mjg3fQ.mPEee3onDeDdoGVRa2AszJNTwImQg0YDaP8vuvw06ww
 
 ###
 POST {{baseurl}}/user/logout
@@ -53,41 +53,40 @@ POST {{baseurl}}/user/addhotel
 Content-Type: application/json
 
 {
-    "name":"Hotel New Maurya",
-    "description":" give wings to your dreamy destinations. ",
-    "location":"singapore",
-    "address":"singapore",
-    "user":"647dcdc6fd4eb43e70254826",
-    "totalRooms":10
+    "name":"OYO",
+    "description":"your dreamy destination",
+    "location":"faridabad",
+    "address":"old faridabad",
+    "user":"647eb3f16dbd8651ddfe1302",
+    "totalRooms":2
 }
 
 ###
 GET {{baseurl}}/user/getAllHotels
 
 ###
-GET {{baseurl}}/user/getHotelsByLocation/Faridabad
+GET {{baseurl}}/user/getHotelsByLocation/faridabad
 
 ###
 POST {{baseurl}}/user/booking
 Content-Type: application/json
 
 {
-  "hotel":"647dce86fd4eb43e7025483a",
-  "user":"647dd788f805b6f773cef859",
+  "hotel":"647ecefc80282e93e3ab2722",
+  "user":"647eb3f16dbd8651ddfe1302",
   "checkInDate":"2023-6-5",
  "checkOutDate":"2023-6-8",
-  "numGuests":2,
-  "rooms":2,
+  "numGuests":1,
+  "rooms":1,
   "totalPrice":2000,
   "paymentStatus":"Paid"
 }
 
-
 ###
-POST {{baseurl}}/user/hotelReview/647dce86fd4eb43e7025483a/647dcdc6fd4eb43e70254826
+POST {{baseurl}}/user/hotelReview/647ecefc80282e93e3ab2722/647eb3f16dbd8651ddfe1302
 Content-Type: application/json
 
 {
-    "review":"nice",
-    "rating":5
+      "review": "Beautiful location and friendly staff",
+      "rating": 4
 }

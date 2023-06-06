@@ -109,6 +109,22 @@
         ],
         "responses": {}
       }
+    },
+    "/user/addHotel": {
+      "post": {
+        "tags": ["hotel management"],
+        "summary": "new hotel listing",
+        "parameters": [
+          {
+            "name": "user inputs",
+            "in": "body",
+            "required": "true",
+            "description": {
+              "$ref": "#/definitions/newHotelListing"
+            }
+          }
+        ]
+      }
     }
   },
   "definitions": {

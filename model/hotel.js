@@ -18,12 +18,16 @@ const hotelSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  review: {
-    type: String,
-  },
-  rating: {
-    type: Number,
-  },
+  reviews: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      review: String,
+      rating: Number,
+    },
+  ],
   amenities: {
     type: [String],
     required: true,
@@ -31,6 +35,9 @@ const hotelSchema = new mongoose.Schema({
   totalRooms: {
     type: Number,
     required: true,
+  },
+  availableRooms: {
+    type: Number,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
