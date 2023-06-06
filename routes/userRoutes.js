@@ -8,6 +8,7 @@ const {
   loginViaToken,
   verifyLogIntoken,
   logout,
+  getUserById,
 } = require("../controller/authController");
 
 router.route("/signup").post(createUser);
@@ -16,4 +17,5 @@ router.route("/verify/mobile/otp").post(verifyOtp);
 router.route("/login").post(userLogin);
 router.route("/login/token").post(loginViaToken);
 router.route("/logout").post(verifyLogIntoken, logout);
+router.route("/getUser/:id").get(getUserById);
 module.exports = router;

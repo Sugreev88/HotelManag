@@ -104,6 +104,18 @@ const logout = async function (req, res, next) {
     errorHandler(error, next);
   }
 };
+
+const getUserById = async function (req, res, next) {
+  try {
+    const id = req.params.id;
+    if (!id) throw new AuthError("please provide user id", 401);
+    let user = await authService.getUserFromDb(id);
+    res.status(200).send(user);
+  } catch (err) {
+    errorHandler(err, next);
+  }
+};
+
 module.exports = {
   createUser,
   verifyOtp,
@@ -113,4 +125,5 @@ module.exports = {
   verifyLogIntoken,
   logout,
   errorHandler,
+  getUserById,
 };

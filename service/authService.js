@@ -15,6 +15,12 @@ const addUserToDb = async function ({ name, email, phone, role, password }) {
   return user._id;
 };
 
+const getUserFromDb = async function (id) {
+  const user = await User.findOne({ _id: id });
+  if (!user) throw new AuthError("User not found", 404);
+  return user;
+};
+
 const generateOtpOnMobile = async function (Phone) {
   await helperService.validUserbyPhone(Phone);
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -72,4 +78,5 @@ module.exports = {
   login,
   verifyToken,
   logoutViaToken,
+  getUserFromDb,
 };

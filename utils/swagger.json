@@ -179,6 +179,14 @@
           "type": "string"
         }
       }
+    },
+    "newHotelListing": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
     }
   }
 }

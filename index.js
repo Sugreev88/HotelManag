@@ -2,17 +2,16 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./utils/swagger.json");
 const dbUtils = require("./utils/dbUtils");
 dbUtils.connectDb();
 app.use(express.json());
-const cors = require("cors");
-app.use(cors);
 const authRoute = require("./routes/userRoutes");
 const hotelRoute = require("./routes/hotelRoutes");
 app.use("/user", authRoute);
-app.use("/user", hotelRoute);
+app.use("/hotel", hotelRoute);
 
 app.get((req, res) => {
   res.send("hello world");
@@ -29,6 +28,7 @@ const error = async function (err, req, res, next) {
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(error);
+app.use(cors);
 
 app.listen(PORT, () => {
   console.log(`listening on port:${PORT}`);

@@ -32,6 +32,9 @@ const bookingSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    isActive: {
+      type: Boolean,
+    },
     paymentStatus: {
       type: String,
       enum: ["Pending", "Paid", "Cancelled"],

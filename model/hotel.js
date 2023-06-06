@@ -39,6 +39,10 @@ const hotelSchema = new mongoose.Schema({
   availableRooms: {
     type: Number,
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -46,5 +50,4 @@ const hotelSchema = new mongoose.Schema({
 });
 
 const Hotel = mongoose.model("Hotel", hotelSchema);
-
 module.exports = Hotel;

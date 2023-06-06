@@ -9,6 +9,14 @@ const UserSchema = new mongoose.Schema(
       required: true,
       maxlength: 50,
       unique: true,
+      validate: {
+        validator: function (value) {
+          // Regex pattern to match alphabets and numbers 1-9
+          const regex = /^[A-Za-z\s]+$/;
+          return regex.test(value);
+        },
+        message: "Name must contain only alphabets and numbers 1-9.",
+      },
     },
     email: {
       type: String,
@@ -16,6 +24,14 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       maxlength: 200,
       required: true,
+      validate: {
+        validator: function (value) {
+          // Regex pattern to match email format
+          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return regex.test(value);
+        },
+        message: "Email address is not valid.",
+      },
     },
     password: {
       type: String,
@@ -32,6 +48,14 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique: true,
+      validate: {
+        validator: function (value) {
+          // Regex pattern to match 10-digit phone number
+          const regex = /^\d{10}$/;
+          return regex.test(value);
+        },
+        message: "Phone number must be a 10-digit number.",
+      },
     },
     token: {
       type: String,

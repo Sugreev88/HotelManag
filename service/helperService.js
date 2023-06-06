@@ -28,4 +28,17 @@ const generateToken = async function (id, email1) {
   }
 };
 
-module.exports = { generateToken, validUserByEmail, validUserbyPhone };
+const parseDateString = async function (dateString) {
+  const parts = dateString.split("-");
+  const day = parseInt(parts[0]);
+  const month = parseInt(parts[1]) - 1;
+  const year = parseInt(parts[2]);
+  return `${year}-${month + 1}-${day}`;
+};
+
+module.exports = {
+  generateToken,
+  validUserByEmail,
+  validUserbyPhone,
+  parseDateString,
+};
