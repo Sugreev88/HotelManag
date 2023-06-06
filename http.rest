@@ -1,7 +1,7 @@
-@baseurl=https://hotel-management-gf0g.onrender.com/
-# @baseurl=http://localhost:3200
+# @baseurl=https://hotel-management-gf0g.onrender.com
+@baseurl=http://localhost:3200
 
-### create hotel ###
+### Create User ###
 ###
 POST {{baseurl}}/user/signup
 Content-Type: application/json
@@ -30,7 +30,7 @@ Content-Type: application/json
 
 {
     "phone":8826891859,
-    "otp":667320
+    "otp":132487
 }
 
 ### user login ###
@@ -46,96 +46,13 @@ Content-Type: application/json
 ### login via token ###
 ###
 POST {{baseurl}}/user/login/token
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2YxOGMyZmU4ZWQ3NWM2OGQ4MWUwNCIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MDUxMDc5fQ.fW0sfqvpP_YZBKH2_UTOnZBITbgULUywe8kTX63BSSQ
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2Y0ZGE1OTRhODgzYjYyODQ0NDM3OCIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MDY0OTcwfQ.aZPFndySWhfeCegsnQ4ag8SxnBBolHf_NS3gjENImOY
 
 ### logout via token ###
 ###
 POST {{baseurl}}/user/logout
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2YxOGMyZmU4ZWQ3NWM2OGQ4MWUwNCIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MDUxMDc5fQ.fW0sfqvpP_YZBKH2_UTOnZBITbgULUywe8kTX63BSSQ
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2Y0ZGE1OTRhODgzYjYyODQ0NDM3OCIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MDY0OTcwfQ.aZPFndySWhfeCegsnQ4ag8SxnBBolHf_NS3gjENImOY
 
 ### get user By Id ###
 ###
-GET {{baseurl}}/user/getuser/647f18c2fe8ed75c68d81e04
-
-
-### add hotel ###
-###
-POST {{baseurl}}/hotel/addhotel
-Content-Type: application/json
-
-{
-    "name":"New Park residency",
-    "description":"your dreamy destination",
-    "location":"faridabad",
-    "address":"old faridabad",
-    "user":"647f18c2fe8ed75c68d81e04",
-    "totalRooms":2
-}
-
-### get all hotels ###
-###
-GET {{baseurl}}/hotel/getAllHotels
-
-### get all hotels by location ###
-###
-GET {{baseurl}}/hotel/getHotelsByLocation/faridabad
-
-### hotel booking ###
-###
-POST {{baseurl}}/hotel/booking
-Content-Type: application/json
-
-{
-  "hotel":"647f262d9a6d059fe38e3bd9",
-  "user":"647f18c2fe8ed75c68d81e04",
-  "checkInDate":"12-8-2023",
- "checkOutDate":"6-10-2023",
-  "numGuests":1,
-  "rooms":2,
-  "totalPrice":2000,
-  "paymentStatus":"Paid"
-}
-
-### add hotel review ###
-###
-POST {{baseurl}}/hotel/review/647f1947fe8ed75c68d81e12/647f18c2fe8ed75c68d81e
-Content-Type: application/json
-
-{
-      "review": "Beautiful location and friendly staff",
-      "rating": 4
-}
-
-### update hotel ###
-###
-PATCH {{baseurl}}/hotel/update
-Content-Type: application/json
-
-{
-      "hotelId":"647f1947fe8ed75c68d81e16",
-      "userId":"647f18c2fe8ed75c68d81e04",
-      "name":"new one hotel",
-      "description":"nicer one",
-      "location":"delhi",
-      "address":"new delhi",
-      "totalRooms":20
-}
-
-### delete hotel ###
-###
-DELETE {{baseurl}}/hotel/delete/647f1947fe8ed75c68d81e16/647f18c2fe8ed75c68d81e04
-
-### cancel hotel booking ###
-###
-
-POST {{baseurl}}/hotel/cancel/booking/647f26579a6d059fe38e3be8
-Content-Type: application/json
-
-{
-  "hotelId":"647f262d9a6d059fe38e3bd9",
-  "userId":"647f18c2fe8ed75c68d81e04"
-}
-
-### get all Bookings ###
-###
-GET {{baseurl}}/hotel/getAllBookings/647f18c2fe8ed75c68d81e04
+GET {{baseurl}}/user/getuser/647f4da594a883b628444378

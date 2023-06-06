@@ -18,7 +18,13 @@ const addUserToDb = async function ({ name, email, phone, role, password }) {
 const getUserFromDb = async function (id) {
   const user = await User.findOne({ _id: id });
   if (!user) throw new AuthError("User not found", 404);
-  return user;
+  return {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    isActive: user.isActive,
+  };
 };
 
 const generateOtpOnMobile = async function (Phone) {

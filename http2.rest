@@ -1,0 +1,84 @@
+# @baseurl=https://hotel-management-gf0g.onrender.com
+@baseurl=http://localhost:3200
+
+### Create hotel ###
+###
+POST {{baseurl}}/hotel/addhotel
+Content-Type: application/json
+
+{
+    "name":"New Maurya Hotel",
+    "description":"your dreamy vacation",
+    "location":"delhi",
+    "address":"saket,delhi",
+    "user":"647f4da594a883b628444378",
+    "totalRooms":2
+}
+
+### get all hotels ###
+###
+GET {{baseurl}}/hotel/getAllHotels
+
+### get all hotels by location ###
+###
+GET {{baseurl}}/hotel/getHotelsByLocation/faridabad
+
+### hotel booking ###
+###
+POST {{baseurl}}/hotel/booking
+Content-Type: application/json
+
+{
+  "hotel":"647f54ba6bc67a97b73deb7f",
+  "user":"647f4da594a883b628444378",
+  "checkInDate":"12-8-2023",
+ "checkOutDate":"6-10-2023",
+  "numGuests":5,
+  "rooms":2,
+  "totalPrice":3000,
+  "paymentStatus":"Paid"
+}
+
+### add hotel review ###
+###
+POST {{baseurl}}/hotel/review/647f54ba6bc67a97b73deb7/647f4da594a883b628444378
+Content-Type: application/json
+
+{
+      "review": "Beautiful location and friendly staff",
+      "rating": 4
+}
+
+### update hotel ###
+###
+PATCH {{baseurl}}/hotel/update
+Content-Type: application/json
+
+{
+      "hotelId":"647f1947fe8ed75c68d81e16",
+      "userId":"647f1947fe8ed75c68d81e16",
+      "name":"new one hotel",
+      "description":"nicer one",
+      "location":"delhi",
+      "address":"new delhi",
+      "totalRooms":20
+}
+
+### delete hotel ###
+###
+DELETE {{baseurl}}/hotel/delete/647f262d9a6d059fe38e3bd9/647f4da594a883b628444378
+
+### cancel hotel booking ###
+###
+
+POST {{baseurl}}/hotel/cancel/booking/647f55d519e2b227c0f72e4f
+Content-Type: application/json
+
+{
+  "hotelId":"647f54ba6bc67a97b73deb7f",
+  "userId":"647f4da594a883b628444378"
+}
+
+### get all Bookings ###
+###
+GET {{baseurl}}/hotel/getAllBookings/647f4da594a883b628444388

@@ -9,6 +9,8 @@ const errorHandler = async function (error, next) {
     next(new ValidationError(error.message));
   } else if (error.code == 11000) {
     next(new ValidationError(error.message));
+  } else if (error instanceof mongoose.Error.CastError) {
+    next(new ValidationError(error.message));
   }
   next(error);
 };
