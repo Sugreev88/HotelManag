@@ -222,7 +222,7 @@
         }
       }
     },
-    "/user/addHotel": {
+    "/hotel/addHotel": {
       "post": {
         "tags": ["Hotel Management"],
         "summary": "New Hotel Listing",
