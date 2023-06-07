@@ -46,6 +46,17 @@ const verifyMobile = async function (req, res, next) {
   }
 };
 
+const verifyEmail = async function (req, res, next) {
+  try {
+    const { email } = req.body;
+    await authService.generateOtpViaMail(email);
+    res.status(200).send({ message: "succesfully send otp on mail" });
+    // res.status(200).send("SUCCESS_CODE = 2002");
+  } catch (error) {
+    errorHandler(error, next);
+  }
+};
+
 const verifyOtp = async function (req, res, next) {
   try {
     const { phone, otp } = req.body;
@@ -128,4 +139,5 @@ module.exports = {
   logout,
   errorHandler,
   getUserById,
+  verifyEmail,
 };

@@ -58,9 +58,15 @@ const addBooking = async function ({
   if (!validHotel.isActive) throw new HotelError("Hotel NOt Found", 404);
   const validUser = await User.findOne({ _id: user });
   if (!validUser) throw new HotelError("user not found", 404);
-  if (!(validHotel.totalRooms >= rooms))
-    throw new HotelError(`only ${validHotel.totalRooms} rooms left `, 400);
+  // console.log(validHotel.availableRooms < rooms);
+  if (validHotel.availableRooms < rooms) {
+    throw new HotelError(
+      `Not enough Rooms !! only ${validHotel.availableRooms} rooms left `,
+      400
+    );
+  }
   const totalRoomsAvailable = validHotel.totalRooms - rooms;
+  if (totalRoomsAvailable < 0) throw new HotelError(`Not enough Rooms  `, 400);
   let updatedHotelRooms = await Hotel.updateOne(
     { _id: hotel },
     {
@@ -148,7 +154,7 @@ const updateHotelToDB = async function ({
 
 const getAllBookingsFromDb = async function (userId) {
   const [result] = await Booking.find({ user: userId });
-  console.log(result);
+  // console.log(result);
   if (!result) throw new HotelError("No Booking found", 404);
   return result;
 };

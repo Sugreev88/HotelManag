@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const helperService = require("../service/helperService");
 const AuthError = require("../error/authError");
+const nodemailer = require("nodemailer");
 
 const addUserToDb = async function ({ name, email, phone, role, password }) {
   let result = new User({ name, email, phone, role, password });
@@ -37,6 +38,33 @@ const generateOtpOnMobile = async function (Phone) {
     to: `+91${Phone}`,
   });
   return message;
+};
+
+const generateOtpViaMail = async function (email) {
+  try {
+    const user = await helperService.validUserByEmail(email);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    await User.updateOne({ email }, { otp }, { upsert: true });
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAIL, // generated ethereal user
+        pass: process.env.GMAIL_PASS,
+      },
+      debug: true,
+    });
+
+    let mailOptions = {
+      from: process.env.GMAIL,
+      to: `${email}`,
+      subject: "User Verification",
+      text: `your verification code is ${otp}`,
+    };
+
+    return transporter.sendMail(mailOptions, function (error, info) {});
+  } catch (error) {
+    throw error;
+  }
 };
 
 const verifyOtpViaMobile = async function (phone1, otp) {
@@ -85,4 +113,5 @@ module.exports = {
   verifyToken,
   logoutViaToken,
   getUserFromDb,
+  generateOtpViaMail,
 };

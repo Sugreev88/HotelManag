@@ -1,11 +1,11 @@
 # @baseurl=https://hotel-management-gf0g.onrender.com
 @baseurl=http://localhost:3200
-
+    
 ### Create User ###
 ###
 POST {{baseurl}}/user/signup
 Content-Type: application/json
-
+           
 {
     "name":"sugreev",
     "email":"ksugreev88@gmail.com",
@@ -23,14 +23,23 @@ Content-Type: application/json
     "phone":8826891859
 }
 
+## verifying user by sending otp on mail ##
+###
+POST {{baseurl}}/user/verify/email
+Content-Type: application/json
+
+{
+    "email":"ksugreev88@gmail.com"
+}
+
 ### verify mobile otp ###
 ###
-POST {{baseurl}}/user/verify/mobile/otp
+POST {{baseurl}}/user/verify/otp
 Content-Type: application/json
 
 {
     "phone":8826891859,
-    "otp":132487
+    "otp":792797
 }
 
 ### user login ###
@@ -46,13 +55,13 @@ Content-Type: application/json
 ### login via token ###
 ###
 POST {{baseurl}}/user/login/token
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2Y0ZGE1OTRhODgzYjYyODQ0NDM3OCIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MDY0OTcwfQ.aZPFndySWhfeCegsnQ4ag8SxnBBolHf_NS3gjENImOY
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODAxNjZhOTVmOTQ1NGRmNTU1MjM3ZSIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MTE1OTkzfQ.ZM_XqQn7mQp_dY2jcOvkTrOMKsnV4k_F0wUW7cNPorI
 
 ### logout via token ###
 ###
 POST {{baseurl}}/user/logout
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2Y0ZGE1OTRhODgzYjYyODQ0NDM3OCIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MDY0OTcwfQ.aZPFndySWhfeCegsnQ4ag8SxnBBolHf_NS3gjENImOY
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODAxNjZhOTVmOTQ1NGRmNTU1MjM3ZSIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MTE1OTkzfQ.ZM_XqQn7mQp_dY2jcOvkTrOMKsnV4k_F0wUW7cNPorI
 
 ### get user By Id ###
 ###
-GET {{baseurl}}/user/getuser/647f4da594a883b628444378
+GET {{baseurl}}/user/getuser/648018429c19f7c6ba2dda21
