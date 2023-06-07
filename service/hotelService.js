@@ -16,7 +16,7 @@ const addHoteltoDB = async function ({
   totalRooms,
 }) {
   const user1 = await User.findOne({ _id: user });
-  console.log(user1);
+  // console.log(user1);
   if (!user1) throw new HotelError("user not found", 404);
   if (user1.role == "Customer") throw new HotelError("Access Denied", 401);
   let result = await new Hotel({
@@ -26,6 +26,7 @@ const addHoteltoDB = async function ({
     address,
     user,
     totalRooms,
+    availableRooms: totalRooms,
   });
   await result.save();
   return result._id;
@@ -58,23 +59,15 @@ const addBooking = async function ({
   if (!validHotel.isActive) throw new HotelError("Hotel NOt Found", 404);
   const validUser = await User.findOne({ _id: user });
   if (!validUser) throw new HotelError("user not found", 404);
-  // console.log(validHotel.availableRooms < rooms);
-  if (validHotel.availableRooms < rooms) {
+  if (validHotel.totalRooms < rooms)
+    throw new HotelError("Not enough Rooms Available in this Hotel");
+  const totalRoomsAvailable = validHotel.availableRooms - rooms;
+  if (!validHotel.availableRooms) {
     throw new HotelError(
       `Not enough Rooms !! only ${validHotel.availableRooms} rooms left `,
       400
     );
   }
-  const totalRoomsAvailable = validHotel.totalRooms - rooms;
-  if (totalRoomsAvailable < 0) throw new HotelError(`Not enough Rooms  `, 400);
-  let updatedHotelRooms = await Hotel.updateOne(
-    { _id: hotel },
-    {
-      $set: {
-        availableRooms: totalRoomsAvailable,
-      },
-    }
-  );
   let result = await new Booking({
     hotel,
     user,
@@ -86,6 +79,14 @@ const addBooking = async function ({
     paymentStatus,
   });
   await result.save();
+  let updatedHotelRooms = await Hotel.updateOne(
+    { _id: hotel },
+    {
+      $set: {
+        availableRooms: totalRoomsAvailable,
+      },
+    }
+  );
   return result._id;
 };
 
@@ -94,7 +95,7 @@ const sendMessageViaMail = async function (user, hotel, totalPrice) {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.GMAIL, // generated ethereal user
+      user: process.env.GMAIL,
       pass: process.env.GMAIL_PASS,
     },
     debug: true,

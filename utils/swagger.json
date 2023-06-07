@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Hotel Management",
-    "description": "Hotel Management System  Endpoints",
+    "title": "User Authentication",
+    "description": "User Authentication Endpoints",
     "version": "1.0.0"
   },
   "servers": [
@@ -26,7 +26,17 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     },
     "/user/verify/mobile": {
@@ -43,10 +53,47 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     },
-    "/user/verify/mobile/otp": {
+    "/user/verify/email": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "verify user by email",
+        "parameters": [
+          {
+            "name": "user inputs",
+            "in": "body",
+            "description": "verify email via otp",
+            "schema": {
+              "$ref": "#/definitions/emailVerification"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/verify/otp": {
       "post": {
         "tags": ["auth"],
         "summary": "verify user mobile using otp",
@@ -60,7 +107,17 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     },
     "/user/login": {
@@ -77,7 +134,17 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     },
     "/user/login/token": {
@@ -92,7 +159,17 @@
             "description": "Bearer token"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     },
     "/user/logout": {
@@ -107,23 +184,298 @@
             "description": "Bearer token"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/getuser/{userid}": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "get user by id",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": "true",
+            "description": "User Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     },
     "/user/addHotel": {
       "post": {
-        "tags": ["hotel management"],
-        "summary": "new hotel listing",
+        "tags": ["Hotel Management"],
+        "summary": "New Hotel Listing",
         "parameters": [
           {
             "name": "user inputs",
             "in": "body",
-            "required": "true",
-            "description": {
+            "required": true,
+            "description": "User inputs for creating a new hotel listing",
+            "schema": {
               "$ref": "#/definitions/newHotelListing"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/hotel/getAllHotels": {
+      "get": {
+        "tags": ["Hotel Management"],
+        "summary": "Get All Hotels",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/hotel/getHotelsByLocation/{location}": {
+      "get": {
+        "tags": ["Hotel Management"],
+        "summary": "get all hotels",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "required": "true",
+            "description": "get hotel by location"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/hotel/booking": {
+      "post": {
+        "tags": ["Hotel Management"],
+        "summary": "Create Hotel Booking",
+        "parameters": [
+          {
+            "name": "Hotel Booking",
+            "in": "body",
+            "required": true,
+            "description": "New Hotel Booking",
+            "schema": {
+              "$ref": "#/definitions/HotelBooking"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/hotel/getAllBookings/{userId}": {
+      "get": {
+        "tags": ["Hotel Management"],
+        "summary": "Get All Bookings",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/hotel/review/{hotelId}/{userId}": {
+      "post": {
+        "tags": ["Hotel Management"],
+        "summary": "Add Hotel Review",
+        "parameters": [
+          {
+            "name": "hotelId",
+            "in": "path",
+            "description": "ID of the hotel",
+            "required": true
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true
+          },
+          {
+            "name": "Add Hotel Review",
+            "in": "body",
+            "required": true,
+            "description": "Add Hotel Review",
+            "schema": {
+              "$ref": "#/definitions/HotelReviewInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/hotel/update": {
+      "patch": {
+        "tags": ["Hotel Management"],
+        "summary": "Update Hotel",
+        "parameters": [
+          {
+            "name": "update Hotel",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateHotel"
+            }
+          }
         ]
+      }
+    },
+    "/hotel/delete/{hotelId}/{userId}": {
+      "delete": {
+        "tags": ["Hotel Management"],
+        "summary": "Delete Hotel",
+        "parameters": [
+          {
+            "name": "hotelId",
+            "in": "path",
+            "description": "ID of the hotel",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/hotel/cancel/booking/{bookingId}": {
+      "post": {
+        "tags": ["Hotel Management"],
+        "summary": "Cancel Hotel Booking",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "description": "ID of the booking",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Cancel Booking",
+            "in": "body",
+            "required": true,
+            "description": "Cancel Hotel Booking",
+            "schema": {
+              "$ref": "#/definitions/CancelBookingRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     }
   },
@@ -169,6 +521,15 @@
         }
       }
     },
+    "emailVerification": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+
     "userLogin": {
       "type": "object",
       "properties": {
@@ -185,6 +546,107 @@
       "properties": {
         "name": {
           "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "totalRooms": {
+          "type": "number"
+        }
+      }
+    },
+    "HotelBooking": {
+      "type": "object",
+      "properties": {
+        "hotel": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "checkInDate": {
+          "type": "string"
+        },
+        "checkOutDate": {
+          "type": "string"
+        },
+        "numGuests": {
+          "type": "number"
+        },
+        "rooms": {
+          "type": "number"
+        },
+        "totalPrice": {
+          "type": "number"
+        },
+        "paymentStatus": {
+          "type": "string"
+        }
+      }
+    },
+    "HotelReviewInput": {
+      "type": "object",
+      "properties": {
+        "review": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number"
+        }
+      }
+    },
+    "updateHotel": {
+      "type": "object",
+      "properties": {
+        "hotelId": {
+          "type": "string",
+          "description": "ID of the hotel"
+        },
+        "userId": {
+          "type": "string",
+          "description": "ID of the user"
+        },
+        "name": {
+          "type": "string",
+          "description": "Updated hotel name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Updated hotel description"
+        },
+        "location": {
+          "type": "string",
+          "description": "Updated hotel location"
+        },
+        "address": {
+          "type": "string",
+          "description": "Updated hotel address"
+        },
+        "totalRooms": {
+          "type": "integer",
+          "description": "Updated total number of rooms"
+        }
+      }
+    },
+    "CancelBookingRequest": {
+      "type": "object",
+      "properties": {
+        "hotelId": {
+          "type": "string",
+          "description": "ID of the hotel"
+        },
+        "userId": {
+          "type": "string",
+          "description": "ID of the user"
         }
       }
     }

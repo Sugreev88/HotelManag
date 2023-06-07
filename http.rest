@@ -64,4 +64,4 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODAxNjZhO
 
 ### get user By Id ###
 ###
-GET {{baseurl}}/user/getuser/648018429c19f7c6ba2dda21
+GET {{baseurl}}/user/getuser/64801fe482f8998af3e82b17

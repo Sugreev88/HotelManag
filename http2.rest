@@ -1,4 +1,5 @@
 # @baseurl=https://hotel-management-gf0g.onrender.com
+# "url": "https://hotel-management-gf0g.onrender.com/"
 @baseurl=http://localhost:3200
 
 ### Create hotel ###
@@ -7,11 +8,11 @@ POST {{baseurl}}/hotel/addhotel
 Content-Type: application/json
 
 {
-    "name":"New Murthal Residency",
-    "description":"enjoy your dreamy vacation",
+    "name":"Amrik sukhdev",
+    "description":"enjoy murthal",
     "location":"delhi",
     "address":"saket,delhi",
-    "user":"64801a2b632ee49ddbd7c61e",
+    "user":"64801fe482f8998af3e82b17",
     "totalRooms":2
 }
 
@@ -21,7 +22,7 @@ GET {{baseurl}}/hotel/getAllHotels
 
 ### get all hotels by location ###
 ###
-GET {{baseurl}}/hotel/getHotelsByLocation/faridabad
+GET {{baseurl}}/hotel/getHotelsByLocation/delhi
 
 ### hotel booking ###
 ###
@@ -29,8 +30,8 @@ POST {{baseurl}}/hotel/booking
 Content-Type: application/json
 
 {
-  "hotel":"64801a63632ee49ddbd7c627",
-  "user":"64801a2b632ee49ddbd7c61e",
+  "hotel":"64804fe21a922c3b5e2a9db2",
+  "user":"64801fe482f8998af3e82b17",
   "checkInDate":"4-8-2023",
   "checkOutDate":"4-9-2023",
   "numGuests":2,
