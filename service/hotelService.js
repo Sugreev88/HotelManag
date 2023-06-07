@@ -62,12 +62,14 @@ const addBooking = async function ({
   if (validHotel.totalRooms < rooms)
     throw new HotelError("Not enough Rooms Available in this Hotel");
   const totalRoomsAvailable = validHotel.availableRooms - rooms;
-  if (!validHotel.availableRooms) {
+  if (!(validHotel.availableRooms || validHotel.availableRooms < 0)) {
     throw new HotelError(
       `Not enough Rooms !! only ${validHotel.availableRooms} rooms left `,
       400
     );
   }
+  if (totalRoomsAvailable < 0)
+    throw new HotelError("Not enough rooms Available", 400);
   let result = await new Booking({
     hotel,
     user,
