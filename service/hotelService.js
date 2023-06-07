@@ -18,7 +18,7 @@ const addHoteltoDB = async function ({
   const user1 = await User.findOne({ _id: user });
   // console.log(user1);
   if (!user1) throw new HotelError("user not found", 404);
-  if (user1.role == "Customer") throw new HotelError("Access Denied", 401);
+  if (user1.role == "Customer") throw new HotelError("You are Not Admin", 401);
   let result = await new Hotel({
     name,
     description,
@@ -54,22 +54,38 @@ const addBooking = async function ({
   totalPrice,
   paymentStatus,
 }) {
+  // const date1 = new Date(checkInDate);
+  // const date2 = new Date(checkOutDate);
+
+  // const timeDifference = Math.abs(date2.getTime() - date1.getTime());
+  // const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+  // console.log("Number of days between the two dates:", daysDifference);
+  // if (numGuests > numRooms * 2) {
+  //   throw new HotelError("Only Two Persons Allowed in One Room", 400);
+  // }
   const validHotel = await Hotel.findOne({ _id: hotel });
   if (!validHotel) throw new HotelError("hotel not found", 404);
   if (!validHotel.isActive) throw new HotelError("Hotel NOt Found", 404);
   const validUser = await User.findOne({ _id: user });
   if (!validUser) throw new HotelError("user not found", 404);
-  if (validHotel.totalRooms < rooms)
-    throw new HotelError("Not enough Rooms Available in this Hotel");
   const totalRoomsAvailable = validHotel.availableRooms - rooms;
-  if (!(validHotel.availableRooms || validHotel.availableRooms < 0)) {
+  if (totalRoomsAvailable <= 0)
     throw new HotelError(
-      `Not enough Rooms !! only ${validHotel.availableRooms} rooms left `,
+      `Can't book ${validHotel.availableRooms} rooms Available`,
       400
     );
-  }
-  if (totalRoomsAvailable < 0)
-    throw new HotelError("Not enough rooms Available", 400);
+  // if (validHotel.totalRooms < rooms)
+  //   throw new HotelError(
+  //     `only ${validHotel.totalRooms} Rooms Available in This Hotel`,
+  //     400
+  //   );
+  // if (!(validHotel.availableRooms == 0 || validHotel.availableRooms < 0)) {
+  //   throw new HotelError(
+  //     `Not enough Rooms !! only ${validHotel.availableRooms} rooms Available `,
+  //     400
+  //   );
+  // }
   let result = await new Booking({
     hotel,
     user,

@@ -14,12 +14,12 @@ const validUserbyPhone = async function (phone) {
   return result;
 };
 
-const generateToken = async function (id, email1) {
+const generateToken = async function (id) {
   try {
     const secretkety = process.env.TOKEN_SECRET_KEY;
-    const token = await jwt.sign({ id, email1 }, secretkety);
+    const token = await jwt.sign({ id }, secretkety);
     let updatedOtp = await User.updateOne(
-      { email: email1 },
+      { _id: id },
       { $set: { token: token } }
     );
     return token;

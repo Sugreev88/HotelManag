@@ -8,11 +8,11 @@ POST {{baseurl}}/hotel/addhotel
 Content-Type: application/json
 
 {
-    "name":"Amrik sukhdev new one",
+    "name":"Amrik sukhdev new one find",
     "description":"enjoy murthal",
     "location":"murthal",
     "address":"saket,delhi",
-    "user":"6480612fbf274e47ce436c71",
+    "user":"64807cd30bd0fa0e97d1b00f",
     "totalRooms":20
 }
 
@@ -30,12 +30,12 @@ POST {{baseurl}}/hotel/booking
 Content-Type: application/json
 
 {
-  "hotel":"64806d0d0db04349d5826304",
-  "user":"6480612fbf274e47ce436c71",
+  "hotel":"648081bf3f52aa2845281e84",
+  "user":"64807cd30bd0fa0e97d1b00f",
   "checkInDate":"4-8-2023",
   "checkOutDate":"4-9-2023",
   "numGuests":2,
-  "rooms":1,
+  "rooms":21,
   "totalPrice":3000,
   "paymentStatus":"Paid"
 }

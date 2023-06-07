@@ -39,7 +39,7 @@ Content-Type: application/json
 
 {
     "phone":8826891859,
-    "otp":792797
+    "otp":791493
 }
 
 ### user login ###
@@ -55,13 +55,13 @@ Content-Type: application/json
 ### login via token ###
 ###
 POST {{baseurl}}/user/login/token
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODAxNjZhOTVmOTQ1NGRmNTU1MjM3ZSIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MTE1OTkzfQ.ZM_XqQn7mQp_dY2jcOvkTrOMKsnV4k_F0wUW7cNPorI
+Authorization: bearer eyJhbGciOiJIUzI1NiIsII6IkpXVCJ9.eyJpZCI6IjY0ODA3Y2QzMGJkMGZhMGU5N2QxYjAwZiIsImlhdCI6MTY4NjE0MzMwMX0.KAAcC6p75gQTuVj7mDKolCmL_9XqJHHlV_UhCano8Oc
 
 ### logout via token ###
 ###
 POST {{baseurl}}/user/logout
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODAxNjZhOTVmOTQ1NGRmNTU1MjM3ZSIsImVtYWlsMSI6ImtzdWdyZWV2ODhAZ21haWwuY29tIiwiaWF0IjoxNjg2MTE1OTkzfQ.ZM_XqQn7mQp_dY2jcOvkTrOMKsnV4k_F0wUW7cNPorI
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODA3Y2QzMGJkMGZhMGU5N2QxYjAwZiIsImlhdCI6MTY4NjE0MzI1Mn0.Q81b5-Ags8DP66u13zAdFYrAi_X_paMd7krgDFnaloc
 
 ### get user By Id ###
 ###
-GET {{baseurl}}/user/getuser/64801fe482f8998af3e82b17
+GET {{baseurl}}/user/getuser/64807cd30bd0fa0e97d1b00f

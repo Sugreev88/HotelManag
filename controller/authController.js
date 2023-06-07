@@ -74,7 +74,7 @@ const userLogin = async function (req, res, next) {
   try {
     const { email, password } = req.body;
     const user = await authService.login(email, password);
-    const token = await helperService.generateToken(user.id, user.email);
+    const token = await helperService.generateToken(user.id);
     res.status(200).send({ message: `succesfully logged in , ${token}` });
   } catch (error) {
     errorHandler(error, next);
