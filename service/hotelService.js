@@ -3,7 +3,6 @@ const Hotel = require("../model/hotel");
 const User = require("../model/user");
 const Booking = require("../model/booking");
 const HotelError = require("../error/hotelError");
-const user = require("../model/user");
 const nodemailer = require("nodemailer");
 const AuthError = require("../error/authError");
 
@@ -12,10 +11,10 @@ const addHoteltoDB = async function ({
   description,
   location,
   address,
-  user,
   totalRooms,
+  loggedINUser,
 }) {
-  const user1 = await User.findOne({ _id: user });
+  const user1 = await User.findOne({ _id: loggedINUser._id });
   // console.log(user1);
   if (!user1) throw new HotelError("user not found", 404);
   if (user1.role == "Customer") throw new HotelError("You are Not Admin", 401);
@@ -24,7 +23,7 @@ const addHoteltoDB = async function ({
     description,
     location,
     address,
-    user,
+    user: user1._id,
     totalRooms,
     availableRooms: totalRooms,
   });
@@ -46,54 +45,38 @@ const findHotelsbyLocation = async function (location) {
 
 const addBooking = async function ({
   hotel,
-  user,
   checkInDate,
   checkOutDate,
   numGuests,
   rooms,
-  totalPrice,
   paymentStatus,
+  loggedINUser,
 }) {
-  // const date1 = new Date(checkInDate);
-  // const date2 = new Date(checkOutDate);
-
-  // const timeDifference = Math.abs(date2.getTime() - date1.getTime());
-  // const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-
-  // console.log("Number of days between the two dates:", daysDifference);
-  // if (numGuests > numRooms * 2) {
-  //   throw new HotelError("Only Two Persons Allowed in One Room", 400);
-  // }
   const validHotel = await Hotel.findOne({ _id: hotel });
   if (!validHotel) throw new HotelError("hotel not found", 404);
-  if (!validHotel.isActive) throw new HotelError("Hotel NOt Found", 404);
-  const validUser = await User.findOne({ _id: user });
+  if (!validHotel.isActive) throw new HotelError("Hotel is Deactivated", 400);
+  const validUser = await User.findOne({ _id: loggedINUser._id });
   if (!validUser) throw new HotelError("user not found", 404);
   const totalRoomsAvailable = validHotel.availableRooms - rooms;
-  if (totalRoomsAvailable <= 0)
+  if (totalRoomsAvailable < 0)
     throw new HotelError(
-      `Can't book ${validHotel.availableRooms} rooms Available`,
+      `Can't book ${rooms} rooms we have only ${validHotel.availableRooms} rooms Available`,
       400
     );
-  // if (validHotel.totalRooms < rooms)
-  //   throw new HotelError(
-  //     `only ${validHotel.totalRooms} Rooms Available in This Hotel`,
-  //     400
-  //   );
-  // if (!(validHotel.availableRooms == 0 || validHotel.availableRooms < 0)) {
-  //   throw new HotelError(
-  //     `Not enough Rooms !! only ${validHotel.availableRooms} rooms Available `,
-  //     400
-  //   );
-  // }
+  if (validHotel.availableRooms <= 0)
+    throw new HotelError(
+      `Can't book ${rooms} rooms we have only  ${validHotel.availableRooms} rooms Available`,
+      400
+    );
+  // console.log(validUser);
   let result = await new Booking({
     hotel,
-    user,
+    user: validUser._id,
     checkInDate,
     checkOutDate,
     numGuests,
     rooms,
-    totalPrice,
+    totalPrice: numGuests * 1000,
     paymentStatus,
   });
   await result.save();
@@ -108,8 +91,10 @@ const addBooking = async function ({
   return result._id;
 };
 
-const sendMessageViaMail = async function (user, hotel, totalPrice) {
-  const user1 = await User.findOne({ _id: user });
+const sendMessageViaMail = async function (result, userid, hotel) {
+  const user1 = await User.findOne({ _id: userid });
+  const hotelData = await Hotel.findOne({ _id: hotel });
+  const bookindData = await Booking.findOne({ _id: result });
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -121,21 +106,24 @@ const sendMessageViaMail = async function (user, hotel, totalPrice) {
   let mailOptions = {
     from: process.env.GMAIL,
     to: `${user1.email}`,
-    subject: "Hotel Booking",
-    text: `your hotel booking have been succesfully processed,and the total amount for your booking is ${totalPrice} Enjoy your trip`,
+    subject: `Hotel Booking id:${bookindData._id}`,
+    text: `your hotel booking have been succesfully placed in ${hotelData.name} hotel from ${bookindData.checkInDate} to ${bookindData.checkOutDate} , and the total amount for your booking is ${bookindData.totalPrice} Enjoy your Trip . 🪂🪂🪂🪂`,
   };
-
   return transporter.sendMail(mailOptions, function (error, info) {});
 };
 
 const addReviewtoHotel = async function (hotelId, userId, review1, rating1) {
   if (rating1 > 5) throw new HotelError("please select betwwen 1 to 5", 400);
-  const hotel = await Booking.find({ hotel: hotelId });
-  // console.log(hotel);
-  const [validHotel] = hotel;
-  if (!validHotel) throw new HotelError("Hotel not found", 404);
-  const [booking] = hotel;
-  if (!(booking.user == userId)) throw new HotelError("Access Denied", 401);
+  const validHotel = await Hotel.findOne({ _id: hotelId, isActive: true });
+  if (!validHotel)
+    throw new HotelError("Hotel Not Find !! Please check Your HotelId");
+  const hotelBooking = await Booking.find({ hotel: hotelId });
+  const [hotelBookingnew] = hotelBooking;
+  if (!hotelBookingnew)
+    throw new HotelError("No Booking found In this hotel", 404);
+  const [booking] = hotelBooking;
+  if (!hotelBookingnew.user.equals(userId))
+    throw new HotelError("No booking Found for the User In This Hotel", 404);
   const updatedReview = await Hotel.updateOne(
     { _id: hotelId },
     { $push: { reviews: { user: userId, review: review1, rating: rating1 } } }
@@ -154,8 +142,17 @@ const updateHotelToDB = async function ({
 }) {
   const validHotel = await Hotel.findOne({ _id: hotelId });
   if (!validHotel) throw new HotelError("Hotel Not Found", 404);
-  if (!(validHotel.user == userId))
+  // if (!(validHotel.user == userId))
+  // console.log(validHotel.user, userId);
+  if (!validHotel.user.equals(userId))
     throw new HotelError("Access Denied!!Invalid User", 401);
+  const previousAvailableRooms = validHotel.availableRooms;
+  const updatedAvailableRooms =
+    previousAvailableRooms + (totalRooms - validHotel.totalRooms);
+  if (updatedAvailableRooms < 0)
+    throw new HotelError(
+      "You Have an Active Booking Please settle them Before Updating"
+    );
   let updateHotel = await Hotel.updateOne(
     { _id: hotelId },
     {
@@ -165,6 +162,7 @@ const updateHotelToDB = async function ({
         location: location,
         address: address,
         totalRooms: totalRooms,
+        availableRooms: updatedAvailableRooms,
       },
     }
   );
@@ -183,7 +181,8 @@ const deactivateHotelToDB = async function (hotelId, userId) {
   if (!validHotel) throw new HotelError("Hotel Not Found", 404);
   let validUser = await User.findOne({ _id: userId });
   if (!validUser) throw new AuthError("User not Found", 404);
-  if (validUser.role == "Customer") throw new AuthError("invalid User", 401);
+  if (validUser.role == "Customer")
+    throw new AuthError("Only Admin Can Delete the Hotel", 401);
   let deactivateHotel = await Hotel.updateOne(
     { _id: hotelId },
     { $set: { isActive: false } }
@@ -193,9 +192,11 @@ const deactivateHotelToDB = async function (hotelId, userId) {
 const cancelBookingToDb = async function (bookingId, hotelId, userId) {
   const validBooking = await Booking.findOne({ _id: bookingId });
   if (!validBooking) throw new HotelError("Booking not Found", 404);
-  if (!(validBooking.hotel == hotelId))
+  // if (!(validBooking.hotel == hotelId))
+  if (!validBooking.hotel.equals(hotelId))
     throw new HotelError("Hotel Not Found", 404);
-  if (!(validBooking.user == userId))
+  // if (!(validBooking.user == userId))
+  if (!validBooking.user.equals(userId))
     throw new HotelError("No Booking Found of This User", 404);
   const roomsAvaialble = validBooking.rooms;
   let deactivateHotelBooking = await Booking.updateOne(

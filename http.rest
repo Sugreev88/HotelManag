@@ -1,18 +1,38 @@
 # @baseurl=https://hotel-management-gf0g.onrender.com
 @baseurl=http://localhost:3200
-    
+
 ### Create User ###
 ###
 POST {{baseurl}}/user/signup
 Content-Type: application/json
            
 {
-    "name":"sugreev",
-    "email":"ksugreev88@gmail.com",
-    "phone":8826891859,
-    "role":"Admin",
+    "name":"sugreevn",
+    "email":"ksugreev888@gmail.com",
+    "phone":8826891855,
+    "role":"Customer",
     "password":"1234"
 }     
+
+
+## verifying user by sending otp on mail ##
+###
+POST {{baseurl}}/user/verify/email
+Content-Type: application/json
+
+{
+    "email":"ksugreev888@gmail.com"
+}
+
+## verifying user by otp through mail ##
+###
+POST {{baseurl}}/user/verify/email/otp
+Content-Type: application/json
+
+{
+    "email":"ksugreev888@gmail.com",
+    "otp":518838
+}
 
 ### verify mobile ###
 ###
@@ -23,23 +43,14 @@ Content-Type: application/json
     "phone":8826891859
 }
 
-## verifying user by sending otp on mail ##
-###
-POST {{baseurl}}/user/verify/email
-Content-Type: application/json
-
-{
-    "email":"ksugreev88@gmail.com"
-}
-
 ### verify mobile otp ###
 ###
-POST {{baseurl}}/user/verify/otp
+POST {{baseurl}}/user/verify/mobile/otp
 Content-Type: application/json
 
 {
     "phone":8826891859,
-    "otp":791493
+    "otp":192287
 }
 
 ### user login ###
@@ -48,20 +59,21 @@ POST {{baseurl}}/user/login
 Content-Type: application/json
 
 {
-    "email":"ksugreev88@gmail.com",
+    "email":"ksugreev888@gmail.com",
     "password":"1234"
 }
 
 ### login via token ###
 ###
 POST {{baseurl}}/user/login/token
-Authorization: bearer eyJhbGciOiJIUzI1NiIsII6IkpXVCJ9.eyJpZCI6IjY0ODA3Y2QzMGJkMGZhMGU5N2QxYjAwZiIsImlhdCI6MTY4NjE0MzMwMX0.KAAcC6p75gQTuVj7mDKolCmL_9XqJHHlV_UhCano8Oc
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODE5MDRmZDA4ODU0ODkxY2VmMDc3NCIsImlhdCI6MTY4NjIxMzE2OSwiZXhwIjoxNjg2MjE0OTY5fQ.Wxfzigsz6xrAihQQTcwWFyxgKK3pUewVFCzhE1GAKs4
 
 ### logout via token ###
 ###
 POST {{baseurl}}/user/logout
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODA3Y2QzMGJkMGZhMGU5N2QxYjAwZiIsImlhdCI6MTY4NjE0MzI1Mn0.Q81b5-Ags8DP66u13zAdFYrAi_X_paMd7krgDFnaloc
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODE5MDRmZDA4ODU0ODkxY2VmMDc3NCIsImlhdCI6MTY4NjIxMzE2OSwiZXhwIjoxNjg2MjE0OTY5fQ.Wxfzigsz6xrAihQQTcwWFyxgKK3pUewVFCzhE1GAKs4
 
 ### get user By Id ###
 ###
-GET {{baseurl}}/user/getuser/64807cd30bd0fa0e97d1b00f
+GET {{baseurl}}/user/getuser
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODE5MDRmZDA4ODU0ODkxY2VmMDc3NCIsImlhdCI6MTY4NjIxMzE2OSwiZXhwIjoxNjg2MjE0OTY5fQ.Wxfzigsz6xrAihQQTcwWFyxgKK3pUewVFCzhE1GAKs4

@@ -73,6 +73,16 @@ const verifyOtpViaMobile = async function (phone1, otp) {
   return;
 };
 
+const verifyOtpViaEmail = async function (email1, otp) {
+  let user = await helperService.validUserByEmail(email1);
+  if (!(user.otp == otp)) throw new AuthError("invalid otp", 401);
+  let updatedOtp = await User.updateOne(
+    { email: email1 },
+    { $set: { otp: "", isActive: true } }
+  );
+  return;
+};
+
 const updateOtpToDb = async function (phone1, otp) {
   let updatedOtp = await User.updateOne(
     { phone: phone1 },
@@ -93,9 +103,11 @@ const login = async function (email1, password1) {
 
 const verifyToken = async function (token) {
   let user = await User.findOne({ token: token });
-  if (!user) throw new AuthError("Access Denied", 401);
+  if (!user)
+    throw new AuthError("Access Denied Invalid Token , Please Login", 401);
   let result = await jwt.verify(token, process.env.TOKEN_SECRET_KEY);
-  if (!(result.id == user._id)) throw new AuthError("Access Denied", 404);
+  if (!(result.id == user._id))
+    throw new AuthError("Access Denied Invalid Token , Please Login", 401);
   return user;
 };
 
@@ -114,4 +126,5 @@ module.exports = {
   logoutViaToken,
   getUserFromDb,
   generateOtpViaMail,
+  verifyOtpViaEmail,
 };

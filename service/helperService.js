@@ -4,20 +4,20 @@ const User = require("../model/user");
 
 const validUserByEmail = async function (email) {
   let result = await User.findOne({ email: email });
-  if (!result) throw new AuthError("invalid email", 401);
+  if (!result) throw new AuthError("Email Not Found", 404);
   return result;
 };
 
 const validUserbyPhone = async function (phone) {
   let result = await User.findOne({ phone: phone });
-  if (!result) throw new AuthError("invalid phone", 401);
+  if (!result) throw new AuthError("Phone Not Found", 404);
   return result;
 };
 
 const generateToken = async function (id) {
   try {
     const secretkety = process.env.TOKEN_SECRET_KEY;
-    const token = await jwt.sign({ id }, secretkety);
+    const token = await jwt.sign({ id }, secretkety, { expiresIn: "30m" });
     let updatedOtp = await User.updateOne(
       { _id: id },
       { $set: { token: token } }

@@ -3,6 +3,7 @@ const authService = require("../service/authService");
 const ValidationError = require("../error/validationError");
 const AuthError = require("../error/authError");
 const helperService = require("../service/helperService");
+const HotelError = require("../error/hotelError");
 
 const errorHandler = async function (error, next) {
   if (error instanceof mongoose.Error.ValidationError) {
@@ -70,6 +71,25 @@ const verifyOtp = async function (req, res, next) {
   }
 };
 
+const verifyEmailOtp = async function (req, res, next) {
+  try {
+    const { email, otp } = req.body;
+    let user = await helperService.validUserByEmail(email);
+    if (user.isActive) {
+      return res
+        .status(200)
+        .send({ message: "please login via Email or Phone and Password" });
+    }
+    await authService.verifyOtpViaEmail(email, otp);
+    return res.status(200).send({
+      message:
+        "succesfully verified Please Login Via Email or Phone and Password",
+    });
+  } catch (error) {
+    errorHandler(error, next);
+  }
+};
+
 const userLogin = async function (req, res, next) {
   try {
     const { email, password } = req.body;
@@ -93,8 +113,11 @@ const loginViaToken = async function (req, res, next) {
     errorHandler(error, next);
   }
 };
+
 const verifyLogIntoken = async function (req, res, next) {
   try {
+    if (!req.headers.authorization)
+      throw new HotelError("Please Provide Token", 401);
     const token =
       req.headers.authorization.split(" ")[1] ||
       req.headers.authorization.split(" ")[0];
@@ -120,7 +143,8 @@ const logout = async function (req, res, next) {
 
 const getUserById = async function (req, res, next) {
   try {
-    const id = req.params.id;
+    const User = req.loggedInUser;
+    const id = User._id;
     if (!id) throw new AuthError("please provide user id", 401);
     let user = await authService.getUserFromDb(id);
     res.status(200).send(user);
@@ -140,4 +164,5 @@ module.exports = {
   errorHandler,
   getUserById,
   verifyEmail,
+  verifyEmailOtp,
 };
