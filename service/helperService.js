@@ -36,6 +36,11 @@ const parseDateString = async function (dateString) {
   return `${year}-${month + 1}-${day}`;
 };
 
+// const validateInputName = async function (name) {
+//   var regex = /^[a-zA-Z0-9]{1,10}$/;
+//   return regex.test(name);
+// };
+
 module.exports = {
   generateToken,
   validUserByEmail,

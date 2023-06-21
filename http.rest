@@ -3,16 +3,18 @@
 
 ### Create User ###
 ###
-POST {{baseurl}}/user/signup
+POST {{baseurl}}/user
 Content-Type: application/json
            
 {
-    "name":"sugreevn",
-    "email":"ksugreev888@gmail.com",
-    "phone":8826891855,
-    "role":"Customer",
-    "password":"1234"
-}     
+  "name": "sugreevNew",
+  "email": "ksugredevc88@gmail.com",
+  "phone": 8826898059,
+  "role": "Admin",
+  "password": "12345"
+}
+
+
 
 
 ## verifying user by sending otp on mail ##
@@ -59,8 +61,8 @@ POST {{baseurl}}/user/login
 Content-Type: application/json
 
 {
-    "email":"ksugreev888@gmail.com",
-    "password":"1234"
+    "email":"ksugreev88@gmail.com",
+    "password":"12345"
 }
 
 ### login via token ###

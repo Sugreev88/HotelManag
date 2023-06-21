@@ -39,7 +39,7 @@ const createUser = async function (req, res, next) {
 const verifyMobile = async function (req, res, next) {
   try {
     const { phone } = req.body;
-    if (!phone) throw new AuthError("Phone number is required");
+    if (!phone) throw new AuthError("Phone number is required", 400);
     await authService.generateOtpOnMobile(phone);
     res.status(200).send({ message: "succesfully send otp on mobile" });
   } catch (error) {

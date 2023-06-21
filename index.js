@@ -11,9 +11,9 @@ app.use(express.json());
 const authRoute = require("./routes/userRoutes");
 const hotelRoute = require("./routes/hotelRoutes");
 app.use("/user", authRoute);
-app.use("/hotel", hotelRoute);
+app.use("/", hotelRoute);
 
-app.get((req, res) => {
+app.get("/", (req, res) => {
   res.send("hello world");
 });
 

@@ -13,15 +13,13 @@ const {
 } = require("../controller/hotelController");
 const { verifyLogIntoken } = require("../controller/authController");
 
-router.route("/addHotel").post(verifyLogIntoken, newHotelListing);
-router.route("/getAllHotels").get(getAllHotels);
-router.route("/getHotelsByLocation/:location").get(getHotelsByLocation);
-router.route("/booking").post(verifyLogIntoken, hotelBooking);
-router.route("/review/:hotelId").post(verifyLogIntoken, hotelReview);
-router.route("/update").patch(verifyLogIntoken, updateHotel);
-router.route("/delete/:hotelId").delete(verifyLogIntoken, deactivateHotel);
-router
-  .route("/cancel/booking/:bookingId")
-  .post(verifyLogIntoken, cancelBooking);
-router.route("/getAllBookings").get(verifyLogIntoken, getAllBookings);
+router.route("/hotel").post(verifyLogIntoken, newHotelListing);
+router.route("/hotels").get(getAllHotels);
+router.route("/hotels/:location").get(getHotelsByLocation);
+router.route("/hotel/booking/:hotelId").post(verifyLogIntoken, hotelBooking);
+router.route("/hotel/review/:hotelId").post(verifyLogIntoken, hotelReview);
+router.route("/hotel/:hotelId").patch(verifyLogIntoken, updateHotel);
+router.route("/hotel/:hotelId").delete(verifyLogIntoken, deactivateHotel);
+router.route("/hotel/cancel/:bookingId").post(verifyLogIntoken, cancelBooking);
+router.route("/hotel/bookings").get(verifyLogIntoken, getAllBookings);
 module.exports = router;

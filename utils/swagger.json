@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "User Authentication",
-    "description": "User Authentication Endpoints",
+    "title": "Hotel Management System",
+    "description": "Hotel Management System API Documentation",
     "version": "1.0.0"
   },
   "servers": [
@@ -12,20 +12,20 @@
   ],
   "schemes": ["http", "https"],
   "paths": {
-    "/user/signup": {
+    "/user": {
       "post": {
         "tags": ["auth"],
         "summary": "create a new User",
-        "parameters": [
-          {
-            "name": "user inputs",
-            "in": "body",
-            "description": "User SignUp details",
-            "schema": {
-              "$ref": "#/definitions/userInput"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/userInput"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -43,16 +43,16 @@
       "post": {
         "tags": ["auth"],
         "summary": "verify user by mobile",
-        "parameters": [
-          {
-            "name": "user inputs",
-            "in": "body",
-            "description": "user verification by mobile",
-            "schema": {
-              "$ref": "#/definitions/userVerificationInputsMobile"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/userVerificationInputsMobile"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -70,16 +70,16 @@
       "post": {
         "tags": ["auth"],
         "summary": "verify user mobile using otp",
-        "parameters": [
-          {
-            "name": "user inputs",
-            "in": "body",
-            "description": "verify mobile via otp",
-            "schema": {
-              "$ref": "#/definitions/userMobileVerificationOtp"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/userMobileVerificationOtp"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -97,16 +97,16 @@
       "post": {
         "tags": ["auth"],
         "summary": "verify user by email",
-        "parameters": [
-          {
-            "name": "user inputs",
-            "in": "body",
-            "description": "verify email via otp",
-            "schema": {
-              "$ref": "#/definitions/emailVerification"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/emailVerification"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -124,16 +124,16 @@
       "post": {
         "tags": ["auth"],
         "summary": "verify user email using otp",
-        "parameters": [
-          {
-            "name": "user inputs",
-            "in": "body",
-            "description": "verify email via otp",
-            "schema": {
-              "$ref": "#/definitions/userEmailVerificationOtp"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/userEmailVerificationOtp"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -154,16 +154,16 @@
       "post": {
         "tags": ["auth"],
         "summary": "user login",
-        "parameters": [
-          {
-            "name": "user inputs",
-            "in": "body",
-            "description": "user login via email and password",
-            "schema": {
-              "$ref": "#/definitions/userLogin"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/userLogin"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -221,7 +221,7 @@
         }
       }
     },
-    "/user/getuser": {
+    "/user/": {
       "get": {
         "tags": ["auth"],
         "summary": "get user by id",
@@ -243,7 +243,7 @@
         }
       }
     },
-    "/hotel/addHotel": {
+    "/hotel": {
       "post": {
         "tags": ["Hotel Management"],
         "summary": "New Hotel Listing",
@@ -252,17 +252,17 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "name": "user inputs",
-            "in": "body",
-            "required": true,
-            "description": "User inputs for creating a new hotel listing",
-            "schema": {
-              "$ref": "#/definitions/newHotelListing"
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/newHotelListing"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -276,7 +276,7 @@
         }
       }
     },
-    "/hotel/getAllHotels": {
+    "/hotels": {
       "get": {
         "tags": ["Hotel Management"],
         "summary": "Get All Hotels",
@@ -293,7 +293,7 @@
         }
       }
     },
-    "/hotel/getHotelsByLocation/{location}": {
+    "/hotels/{location}": {
       "get": {
         "tags": ["Hotel Management"],
         "summary": "get all hotels",
@@ -318,7 +318,7 @@
         }
       }
     },
-    "/hotel/booking": {
+    "/hotel/booking/{hotelId}": {
       "post": {
         "tags": ["Hotel Management"],
         "summary": "Create Hotel Booking",
@@ -329,15 +329,22 @@
         ],
         "parameters": [
           {
-            "name": "Hotel Booking",
-            "in": "body",
-            "required": true,
-            "description": "New Hotel Booking",
-            "schema": {
-              "$ref": "#/definitions/HotelBooking"
-            }
+            "name": "HotelId",
+            "in": "path",
+            "required": "true",
+            "description": "book hotel by hotel Id"
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/HotelBooking"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -351,7 +358,7 @@
         }
       }
     },
-    "/hotel/getAllBookings": {
+    "/hotel/bookings": {
       "get": {
         "tags": ["Hotel Management"],
         "summary": "Get All Bookings",
@@ -388,18 +395,18 @@
             "in": "path",
             "description": "ID of the hotel",
             "required": true
-          },
-
-          {
-            "name": "Add Hotel Review",
-            "in": "body",
-            "required": true,
-            "description": "Add Hotel Review",
-            "schema": {
-              "$ref": "#/definitions/HotelReviewInput"
-            }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/HotelReviewInput"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -413,7 +420,7 @@
         }
       }
     },
-    "/hotel/update": {
+    "/hotel/{HotelId}": {
       "patch": {
         "tags": ["Hotel Management"],
         "summary": "Update Hotel",
@@ -424,14 +431,22 @@
         ],
         "parameters": [
           {
-            "name": "update Hotel",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/updateHotel"
-            }
+            "name": "HotelId",
+            "in": "path",
+            "description": "ID of the hotel",
+            "required": true
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/updateHotel"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -445,7 +460,7 @@
         }
       }
     },
-    "/hotel/delete/{hotelId}": {
+    "/hotel/{hotelId}": {
       "delete": {
         "tags": ["Hotel Management"],
         "summary": "Delete Hotel",
@@ -478,7 +493,7 @@
         }
       }
     },
-    "/hotel/cancel/booking/{bookingId}": {
+    "/hotel/cancel/{bookingId}": {
       "post": {
         "tags": ["Hotel Management"],
         "summary": "Cancel Hotel Booking",
@@ -495,15 +510,6 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "Cancel Booking",
-            "in": "body",
-            "required": true,
-            "description": "Cancel Hotel Booking",
-            "schema": {
-              "$ref": "#/definitions/CancelBookingRequest"
             }
           }
         ],
@@ -537,19 +543,24 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "required": "true"
         },
         "email": {
-          "type": "string"
+          "type": "string",
+          "required": "true"
         },
         "phone": {
-          "type": "number"
+          "type": "number",
+          "required": "true"
         },
         "role": {
-          "type": "string"
+          "type": "string",
+          "required": "true"
         },
         "password": {
-          "type": "string"
+          "type": "string",
+          "required": "true"
         }
       }
     },
@@ -629,9 +640,6 @@
     "HotelBooking": {
       "type": "object",
       "properties": {
-        "hotel": {
-          "type": "string"
-        },
         "checkInDate": {
           "type": "string"
         },
@@ -663,10 +671,6 @@
     "updateHotel": {
       "type": "object",
       "properties": {
-        "hotelId": {
-          "type": "string",
-          "description": "ID of the hotel"
-        },
         "name": {
           "type": "string",
           "description": "Updated hotel name"
@@ -686,15 +690,6 @@
         "totalRooms": {
           "type": "integer",
           "description": "Updated total number of rooms"
-        }
-      }
-    },
-    "CancelBookingRequest": {
-      "type": "object",
-      "properties": {
-        "hotelId": {
-          "type": "string",
-          "description": "ID of the hotel"
         }
       }
     }

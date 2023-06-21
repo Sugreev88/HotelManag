@@ -53,14 +53,9 @@ function parseDateString(dateString) {
 const hotelBooking = async function (req, res, next) {
   try {
     const loggedINUser = req.loggedInUser;
-    const {
-      hotel,
-      checkInDate,
-      checkOutDate,
-      numGuests,
-      rooms,
-      paymentStatus,
-    } = req.body;
+    const hotelId = req.params.hotelId;
+    const { checkInDate, checkOutDate, numGuests, rooms, paymentStatus } =
+      req.body;
     if (rooms <= 0 || !rooms)
       throw new HotelError(
         `please select a valid rooms can't book ${rooms} rooms`,
@@ -68,12 +63,24 @@ const hotelBooking = async function (req, res, next) {
       );
     const checkIn = new Date(parseDateString(checkInDate));
     const checkOut = new Date(parseDateString(checkOutDate));
-    if (!(checkIn >= Date.now()))
-      throw new HotelError("Please select a valid Date", 400);
-    if (checkIn >= checkOut)
-      throw new HotelError("Check-in date must be before check-out date", 400);
+
+    const currentDate = new Date();
+    // Assuming the booking date is provided as a string, you can parse it as a Date object
+    // const bookingDateStr = "2023-06-09";
+    // const bookingDate = new Date(bookingDateStr);
+
+    // Remove the time portion from the current date and booking date for accurate comparison
+    currentDate.setHours(0, 0, 0, 0);
+    checkIn.setHours(0, 0, 0, 0);
+
+    console.log(currentDate.getTime());
+
+    // if ((checkIn < new Date()))
+    //   throw new HotelError("Please select a valid Date", 400);
+    // if (checkIn >= checkOut)
+    //   throw new HotelError("Check-in date must be before check-out date", 400);
     let result = await hotelService.addBooking({
-      hotel,
+      hotelId,
       checkInDate,
       checkOutDate,
       numGuests,
@@ -121,8 +128,8 @@ const deactivateHotel = async function (req, res, next) {
 const updateHotel = async function (req, res, next) {
   try {
     const user = req.loggedInUser;
-    const { hotelId, name, description, location, address, totalRooms } =
-      req.body;
+    const hotelId = req.params.hotelId;
+    const { name, description, location, address, totalRooms } = req.body;
     // if (!(hotelId && userId))
     //   throw new AuthError("please Provide Hotelid and userid", 401);
     await hotelService.updateHotelToDB({

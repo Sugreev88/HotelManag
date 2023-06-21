@@ -1,12 +1,12 @@
 # @baseurl=https://hotel-management-gf0g.onrender.com
 # "url": "https://hotel-management-gf0g.onrender.com/"
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODFhNmQzNjJiMTdkMzVlM2ExMjJiNSIsImlhdCI6MTY4NjIxODUxMiwiZXhwIjoxNjg2MjIwMzEyfQ.AIDKYNIVmUBMR25q_JCagE72yPzfeMPASbb3SS7hnNk
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODE5MDRmZDA4ODU0ODkxY2VmMDc3NCIsImlhdCI6MTY4NjIyNjE5NywiZXhwIjoxNjg2MjI3OTk3fQ.t9N87iFH77T6EuVYBEwzXeO5KDX2RYjOHbBM7NduwBU
 
 @baseurl=http://localhost:3200
 
 ### Create hotel ###
 ###
-POST {{baseurl}}/hotel/addhotel
+POST {{baseurl}}/hotel
 Content-Type: application/json
 Authorization: bearer {{token}}
 
@@ -20,24 +20,23 @@ Authorization: bearer {{token}}
 
 ### get all hotels ###
 ###
-GET {{baseurl}}/hotel/getAllHotels
+GET {{baseurl}}/hotels
 
 ### get all hotels by location ###
 ###
-GET {{baseurl}}/hotel/getHotelsByLocation/delhi
+GET {{baseurl}}/hotels/delhi
 
 ### hotel booking ###
 ###
-POST {{baseurl}}/hotel/booking 
+POST {{baseurl}}/hotel/booking/
 Content-Type: application/json
 Authorization: bearer {{token}}
 
 {
-  "hotel":"648192a76cf498a89b97ebbe",
-  "checkInDate":"4-8-2023",
-  "checkOutDate":"4-9-2023",
+  "checkInDate":"12-07-2023",
+  "checkOutDate":"15-07-2023",
   "numGuests":2,
-  "rooms":1,
+  "rooms":20,
   "paymentStatus":"Paid"
 }
 
@@ -55,12 +54,11 @@ Authorization: bearer {{token}}
 
 ### update hotel ###
 ###
-PATCH {{baseurl}}/hotel/update
+PATCH {{baseurl}}/hotel/
 Content-Type: application/json
 Authorization: bearer {{token}}
 
 {
-      "hotelId":"648192a76cf498a89b97ebbe",
       "name":"new one hotel",
       "description":"nicer one",
       "location":"delhi",
