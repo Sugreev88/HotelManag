@@ -93,7 +93,7 @@ const userLogin = async function (req, res, next) {
     const { email, password } = req.body;
     const user = await authService.login(email, password);
     const token = await helperService.generateToken(user.id);
-    res.status(200).send({ message: `succesfully logged in , ${token}` });
+    res.status(200).send({ token: ` ${token}` });
   } catch (error) {
     errorHandler(error, next);
   }
