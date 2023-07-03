@@ -1,7 +1,6 @@
 # @baseurl=https://hotel-management-gf0g.onrender.com
 # "url": "https://hotel-management-gf0g.onrender.com/"
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODE5MDRmZDA4ODU0ODkxY2VmMDc3NCIsImlhdCI6MTY4NjIyNjE5NywiZXhwIjoxNjg2MjI3OTk3fQ.t9N87iFH77T6EuVYBEwzXeO5KDX2RYjOHbBM7NduwBU
-
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODJjNGQ2YTZkMGJiOTM4MWRiMGIzOCIsImlhdCI6MTY4Nzk0NzI0NywiZXhwIjoxNjg3OTQ5MDQ3fQ.mdNO7efTxCBkiQXE_YQ2lPpUJnj8GBAKm5KkMUL0K90
 @baseurl=http://localhost:3200
 
 ### Create hotel ###

@@ -18,8 +18,6 @@ const errorHandler = async function (error, next) {
 
 const createUser = async function (req, res, next) {
   try {
-    // const ne = req.body;
-    // console.log(ne);
     const { name, email, phone, role, password } = req.body;
     let id = await authService.addUserToDb({
       name,

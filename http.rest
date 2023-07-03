@@ -14,9 +14,6 @@ Content-Type: application/json
   "password": "12345"
 }
 
-
-
-
 ## verifying user by sending otp on mail ##
 ###
 POST {{baseurl}}/user/verify/email
@@ -54,7 +51,7 @@ Content-Type: application/json
     "phone":8826891859,
     "otp":192287
 }
-
+    
 ### user login ###
 ###
 POST {{baseurl}}/user/login
@@ -77,5 +74,5 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODE5MDRmZ
 
 ### get user By Id ###
 ###
-GET {{baseurl}}/user/getuser
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODE5MDRmZDA4ODU0ODkxY2VmMDc3NCIsImlhdCI6MTY4NjIxMzE2OSwiZXhwIjoxNjg2MjE0OTY5fQ.Wxfzigsz6xrAihQQTcwWFyxgKK3pUewVFCzhE1GAKs4
+GET {{baseurl}}/user
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODJjNGQ2YTZkMGJiOTM4MWRiMGIzOCIsImlhdCI6MTY4ODM4Mzc1OCwiZXhwIjoxNjg4Mzg1NTU4fQ.q43AmS_HWEGPDzRmDj34CIege7ug88QhA4hp-RVl31w
